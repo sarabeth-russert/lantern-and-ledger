@@ -46,7 +46,7 @@ export function HallwayHotspot({ room, x, y, w, h }: Props) {
           left: '-20%',
           right: '-20%',
           bottom: '-20%',
-          background: `radial-gradient(ellipse at 50% 60%, ${room.glowColor}55 0%, ${room.glowColor}22 40%, transparent 70%)`,
+          background: `radial-gradient(ellipse at 50% 60%, ${room.glowColor}30 0%, ${room.glowColor}12 40%, transparent 70%)`,
           filter: 'blur(10px)',
         }}
       />
