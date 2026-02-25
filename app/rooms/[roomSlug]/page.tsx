@@ -1,6 +1,6 @@
 'use client'
 
-import { use } from 'react'
+import { use, useState, useEffect } from 'react'
 import { notFound } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { getRoomBySlug } from '@/lib/constants/rooms'
@@ -9,7 +9,9 @@ import { LanternPanel } from '@/components/room/LanternPanel'
 import { LedgerPanel } from '@/components/room/LedgerPanel'
 import { TaskBoard } from '@/components/room/TaskBoard'
 import { DayTable } from '@/components/room/DayTable'
-import { PAGE_TRANSITION, PANEL_ENTRANCE, STAGGER_CONTAINER } from '@/lib/motion'
+import { PAGE_TRANSITION, PANEL_ENTRANCE } from '@/lib/motion'
+
+const PANEL_DELAY_MS = 4000
 
 export default function RoomPage({
   params,
@@ -19,6 +21,13 @@ export default function RoomPage({
   const { roomSlug } = use(params)
   const room = getRoomBySlug(roomSlug)
   if (!room) notFound()
+
+  const [panelsVisible, setPanelsVisible] = useState(false)
+
+  useEffect(() => {
+    const t = setTimeout(() => setPanelsVisible(true), PANEL_DELAY_MS)
+    return () => clearTimeout(t)
+  }, [])
 
   return (
     <>
@@ -74,27 +83,35 @@ export default function RoomPage({
           <RoomHeader room={room} />
 
           <motion.div
-            variants={STAGGER_CONTAINER}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0, y: 16 }}
+            animate={panelsVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2"
           >
             {/* Left: Lantern + Day Table */}
             <div className="flex flex-col gap-4">
-              <motion.div custom={0} variants={PANEL_ENTRANCE} className="flex flex-col flex-1">
+              <motion.div custom={0} variants={PANEL_ENTRANCE}
+                initial="hidden" animate={panelsVisible ? 'visible' : 'hidden'}
+              >
                 <LanternPanel room={room} />
               </motion.div>
-              <motion.div custom={3} variants={PANEL_ENTRANCE}>
+              <motion.div custom={3} variants={PANEL_ENTRANCE}
+                initial="hidden" animate={panelsVisible ? 'visible' : 'hidden'}
+              >
                 <DayTable roomSlug={room.slug} accentColor={room.accentColor} />
               </motion.div>
             </div>
 
             {/* Right: Task Board + Ledger */}
             <div className="flex flex-col gap-4">
-              <motion.div custom={1} variants={PANEL_ENTRANCE}>
+              <motion.div custom={1} variants={PANEL_ENTRANCE}
+                initial="hidden" animate={panelsVisible ? 'visible' : 'hidden'}
+              >
                 <TaskBoard roomSlug={room.slug} accentColor={room.accentColor} />
               </motion.div>
-              <motion.div custom={2} variants={PANEL_ENTRANCE}>
+              <motion.div custom={2} variants={PANEL_ENTRANCE}
+                initial="hidden" animate={panelsVisible ? 'visible' : 'hidden'}
+              >
                 <LedgerPanel roomSlug={room.slug} accentColor={room.accentColor} />
               </motion.div>
             </div>
