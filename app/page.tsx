@@ -8,7 +8,7 @@ export default function Hall() {
 
   return (
     // 500vh: plenty of scroll range to walk deep into the hallway
-    <main className="relative" style={{ height: '500vh' }}>
+    <main className="relative" style={{ height: '1200vh' }}>
       <div className="sticky top-0 h-screen overflow-hidden">
         <HallwayScene scrollYProgress={scrollYProgress} />
 
