@@ -1,0 +1,118 @@
+@import "tailwindcss";
+
+@theme {
+  /* ─── Dark Adventurer Palette ──────────────────────────────────────────── */
+  --color-surface:       #0f0d0a;   /* deep warm black — page bg             */
+  --color-surface-raise: #161210;   /* card / panel surface                  */
+  --color-surface-high:  #1e1914;   /* elevated / input surface              */
+  --color-cream:         #f2e8d5;   /* primary text (warm cream)             */
+  --color-cream-muted:   rgba(242,232,213,0.50);
+  --color-cream-faint:   rgba(242,232,213,0.22);
+  --color-cream-ghost:   rgba(242,232,213,0.08);
+
+  /* Goonies accent — dark crimson red */
+  --color-goonies:       #6c0e11;
+  --color-goonies-warm:  #8b1215;
+
+  /* Lantern gold */
+  --color-lantern:       #f5c842;
+  --color-lantern-warm:  #e8a030;
+  --color-lantern-dim:   rgba(245,200,66,0.30);
+
+  /* ─── Room Colors ──────────────────────────────────────────────────────── */
+  --color-room-banjo-bg:      #2a1c10;
+  --color-room-banjo-accent:  #d4895e;
+  --color-room-banjo-glow:    #f0a870;
+
+  --color-room-garden-bg:     #0e2016;
+  --color-room-garden-accent: #6db86d;
+  --color-room-garden-glow:   #8fd48f;
+
+  --color-room-school-bg:     #0d1a30;
+  --color-room-school-accent: #6a94c4;
+  --color-room-school-glow:   #90b8e0;
+
+  --color-room-work-bg:       #18102a;
+  --color-room-work-accent:   #9470b8;
+  --color-room-work-glow:     #b898d8;
+
+  --color-room-finance-bg:    #081e1e;
+  --color-room-finance-accent:#44a090;
+  --color-room-finance-glow:  #68c0b0;
+
+  --color-room-workout-bg:    #220e0e;
+  --color-room-workout-accent:#c46868;
+  --color-room-workout-glow:  #de9898;
+
+  /* ─── Typography ───────────────────────────────────────────────────────── */
+  --font-serif: var(--font-lora), Georgia, "Times New Roman", serif;
+  --font-sans:  var(--font-inter), system-ui, sans-serif;
+
+  /* ─── Shadows ──────────────────────────────────────────────────────────── */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.5);
+  --shadow-glow: 0 0 32px rgba(245,200,66,0.25);
+  --shadow-room: 0 12px 48px rgba(0,0,0,0.6);
+}
+
+/* ─── Base ────────────────────────────────────────────────────────────────── */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: #0f0d0a;
+  color: #f2e8d5;
+  font-family: var(--font-sans);
+}
+
+/* ─── Scrollbars ──────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(242,232,213,0.12);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(242,232,213,0.25); }
+
+/* ─── Goonies pulse ring ──────────────────────────────────────────────────── */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0px rgba(108,14,17,0.70); }
+  100% { box-shadow: 0 0 0 28px rgba(108,14,17,0.00); }
+}
+
+/* ─── Room-colored pulse (applied via JS / inline vars) ───────────────────── */
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+/* ─── Lantern flicker ─────────────────────────────────────────────────────── */
+@keyframes lantern-flicker {
+  0%, 100% { filter: drop-shadow(0 0  8px rgba(245,200,66,0.6)); }
+  25%       { filter: drop-shadow(0 0 18px rgba(245,200,66,1.0)); }
+  50%       { filter: drop-shadow(0 0 10px rgba(245,200,66,0.7)); }
+  75%       { filter: drop-shadow(0 0 22px rgba(245,200,66,0.9)); }
+}
+
+.lantern-flicker { animation: lantern-flicker 3s ease-in-out infinite; }
+
+/* ─── Utilities ───────────────────────────────────────────────────────────── */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Input reset for dark theme */
+input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(0.8); }
+
+/* ─── Dust float (HallwayScene particles) ─────────────────────────────────── */
+@keyframes dust-float {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  25%  { transform: translate(12px, -18px) scale(1.2); opacity: 0.7; }
+  50%  { transform: translate(-8px, -32px) scale(0.9); opacity: 0.3; }
+  75%  { transform: translate(16px, -20px) scale(1.1); opacity: 0.6; }
+  100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+}
